@@ -12,7 +12,7 @@ async function scrapeAll(browserInstance) {
 			if (err) {
 				return console.log(err);
 			}
-			console.log("The data has been scraped and saved successfully! View it at './links.json'");
+			console.log(`The data has been scraped and saved successfully! View ${linksObject['links'].length} data at './links.json'`);
 		});
 
 	}

@@ -15,13 +15,27 @@ const scraperObject = {
 				let urls = await page.evaluate(async () => {
 					let linksElement = document.querySelectorAll("div[aria-label=Memorial] > a")
 					let links = Object.values(linksElement).map(link => {
+						const url = link.href
+						// format into capitalised spaced names
+						const stringParts = url
+							.split("/")
+							.pop()
+							.split(/[-_]+/)
+							.map(word => word.replace(/(?:^|\s)\S/g, a => a.toUpperCase()))
+						const nameParts = [
+							first = stringParts[0],
+							middle = stringParts.length >= 3 ? stringParts.slice(1, -1).join(' ') : undefined,
+							last = stringParts[stringParts.length - 1]
+						]
+
 						return {
-							url: link.href,
-							name: link.href.split("/").pop().replace(/-/g, ' ').replace(/(?:^|\s)\S/g, a => a.toUpperCase())
+							url,
+							first,
+							middle,
+							last,
 						}
 					})
 					return links
-					// return Array.from(linksObject).map((link) => { return link.href });
 				});
 				for (let link in urls) {
 					scrapedData.push(urls[link])
