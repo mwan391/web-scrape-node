@@ -13,8 +13,15 @@ const scraperObject = {
 				await page.waitForSelector('.memorial-list-data');
 				// Get the link to all the required graves
 				let urls = await page.evaluate(async () => {
-					let linksObject = document.querySelectorAll("div[aria-label=Memorial] > a")
-					return Array.from(linksObject).map((link) => { return link.href });
+					let linksElement = document.querySelectorAll("div[aria-label=Memorial] > a")
+					let links = Object.values(linksElement).map(link => {
+						return {
+							url: link.href,
+							name: link.href.split("/").pop().replace(/-/g, ' ').replace(/(?:^|\s)\S/g, a => a.toUpperCase())
+						}
+					})
+					return links
+					// return Array.from(linksObject).map((link) => { return link.href });
 				});
 				for (let link in urls) {
 					scrapedData.push(urls[link])
