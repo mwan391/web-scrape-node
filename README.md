@@ -1,4 +1,4 @@
 # web-scrape-node
 
-- scraping data through multiple pages using Puppeteer
-- saving data as JSON
+- next page data scraping using Puppeteer
+- saved data as JSON
